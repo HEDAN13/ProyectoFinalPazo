@@ -6,10 +6,12 @@ function main() {
     ingreso.textContent = "Salir";
     cambiarSaludo(nombreGuardado);
     cambiarPrimerParrafo(nombreGuardado);
+    mostrarOpciones(nombreGuardado);
   } else {
     ingreso.textContent = "Ingresar";
     cambiarSaludo(null);
     cambiarPrimerParrafo(null);
+    mostrarOpciones(null);
   }
 
   ingreso.addEventListener("click", () => {
@@ -20,8 +22,44 @@ function main() {
       ingreso.textContent = "Ingresar";
       cambiarSaludo(null);
       cambiarPrimerParrafo(null);
+      mostrarOpciones(null);
     }
   });
+}
+
+function mostrarOpciones(nombre) {
+  const mostrarDiv = document.getElementById("mostrarCards");
+
+  if (nombre) {
+    mostrarDiv.innerHTML = `
+  <div class="card" style="width: 18rem;">
+    <img src="./assets/imagenPerfil.jpg" class="card-img-top" alt="Ejemplo de imagen de perfil">
+    <div class="card-body">
+      <h5 class="card-title">Imagen de perfil</h5>
+      <p class="card-text"><strong id="precioPerfil">$25 usd</strong> - Digital / Color / 300 dpi y 75 dpi</p>
+      <button class="btn btn-primary" id="agregaPerfil">Agregar</button>
+    </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+    <img src="./assets/medioCuerpo.jpeg" class="card-img-top" alt="Ejemplo de imagen medio cuerpo">
+    <div class="card-body">
+      <h5 class="card-title">Imagen medio cuerpo</h5>
+      <p class="card-text"><strong id="precioPerfil">$60 usd</strong> - Digital / Color / 300 dpi</p>
+      <button class="btn btn-primary" id="agregaMedio">Agregar</button>
+    </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+    <img src="./assets/mascota.jpeg" class="card-img-top" alt="Ejemplo de mascota">
+    <div class="card-body">
+      <h5 class="card-title">Imagen mascota</h5>
+      <p class="card-text"><strong id="precioPerfil">$30 usd</strong> - Digital / Color / 300 dpi</p>
+      <button class="btn btn-primary" id="agregaMascota">Agregar</button>
+    </div>
+  </div>
+  `;
+  } else {
+    mostrarDiv.innerHTML = ` `;
+  }
 }
 
 function userForm(ingreso) {
@@ -47,6 +85,7 @@ function userForm(ingreso) {
     const nombreGuardado = localStorage.getItem("nombreUsuario");
     cambiarSaludo(nombreGuardado);
     cambiarPrimerParrafo(nombreGuardado);
+    mostrarOpciones(nombreGuardado);
   });
 }
 
