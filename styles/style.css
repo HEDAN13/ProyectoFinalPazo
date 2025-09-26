@@ -35,10 +35,10 @@ header a img {
   margin: 15px;
 }
 
-header button {
+main button {
   background-color: #fab2b3;
   color: black;
-  border: none;
+  border: black solid 2px;
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 16px;

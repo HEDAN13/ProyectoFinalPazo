@@ -1,3 +1,6 @@
+let comisiones = [];
+let comisionId = 1;
+
 function main() {
   const ingreso = document.getElementById("identificarse");
   const nombreGuardado = localStorage.getItem("nombreUsuario");
@@ -38,25 +41,50 @@ function mostrarOpciones(nombre) {
       <h5 class="card-title">Imagen de perfil</h5>
       <p class="card-text"><strong id="precioPerfil">$25 usd</strong> - Digital / Color / 300 dpi y 75 dpi</p>
       <button class="btn btn-warning" id="agregaPerfil">Agregar</button>
+      <p class="card-text" id="cantidadPerfil">0</p>
     </div>
   </div>
   <div class="card" style="width: 18rem;">
     <img src="./assets/medioCuerpo.jpeg" class="card-img-top" alt="Ejemplo de imagen medio cuerpo">
     <div class="card-body">
       <h5 class="card-title">Imagen medio cuerpo</h5>
-      <p class="card-text"><strong id="precioPerfil">$60 usd</strong> - Digital / Color / 300 dpi</p>
+      <p class="card-text"><strong id="precioMedio">$60 usd</strong> - Digital / Color / 300 dpi</p>
       <button class="btn btn-warning" id="agregaMedio">Agregar</button>
+      <p class="card-text" id="cantidadMedio">0</p>
     </div>
   </div>
   <div class="card" style="width: 18rem;">
     <img src="./assets/mascota.jpeg" class="card-img-top" alt="Ejemplo de mascota">
     <div class="card-body">
       <h5 class="card-title">Imagen mascota</h5>
-      <p class="card-text"><strong id="precioPerfil">$30 usd</strong> - Digital / Color / 300 dpi</p>
+      <p class="card-text"><strong id="precioMascota">$30 usd</strong> - Digital / Color / 300 dpi</p>
       <button class="btn btn-warning" id="agregaMascota">Agregar</button>
+      <p class="card-text" id="cantidadMascota">0</p>
     </div>
   </div>
   `;
+
+    const botones = mostrarDiv.querySelectorAll("button");
+    botones.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cardBody = btn.closest(".card-body");
+        const pCantidad = cardBody.querySelector("p.card-text:last-of-type");
+
+        const comision = {
+          id: comisionId++,
+          type: cardBody.querySelector(".card-title").textContent,
+          price: cardBody
+            .querySelector("strong")
+            .textContent.replace(/\D/g, ""),
+        };
+
+        comisiones.push(comision);
+        localStorage.setItem("comisiones", JSON.stringify(comisiones));
+        let cantidad = parseInt(pCantidad.textContent);
+        cantidad++;
+        pCantidad.textContent = cantidad;
+      });
+    });
   } else {
     mostrarDiv.innerHTML = ` `;
   }
