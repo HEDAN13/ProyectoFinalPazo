@@ -37,7 +37,7 @@ function mostrarOpciones(nombre) {
     <div class="card-body">
       <h5 class="card-title">Imagen de perfil</h5>
       <p class="card-text"><strong id="precioPerfil">$25 usd</strong> - Digital / Color / 300 dpi y 75 dpi</p>
-      <button class="btn btn-primary" id="agregaPerfil">Agregar</button>
+      <button class="btn btn-warning" id="agregaPerfil">Agregar</button>
     </div>
   </div>
   <div class="card" style="width: 18rem;">
@@ -45,7 +45,7 @@ function mostrarOpciones(nombre) {
     <div class="card-body">
       <h5 class="card-title">Imagen medio cuerpo</h5>
       <p class="card-text"><strong id="precioPerfil">$60 usd</strong> - Digital / Color / 300 dpi</p>
-      <button class="btn btn-primary" id="agregaMedio">Agregar</button>
+      <button class="btn btn-warning" id="agregaMedio">Agregar</button>
     </div>
   </div>
   <div class="card" style="width: 18rem;">
@@ -53,7 +53,7 @@ function mostrarOpciones(nombre) {
     <div class="card-body">
       <h5 class="card-title">Imagen mascota</h5>
       <p class="card-text"><strong id="precioPerfil">$30 usd</strong> - Digital / Color / 300 dpi</p>
-      <button class="btn btn-primary" id="agregaMascota">Agregar</button>
+      <button class="btn btn-warning" id="agregaMascota">Agregar</button>
     </div>
   </div>
   `;
@@ -66,10 +66,10 @@ function userForm(ingreso) {
   const ingresoDiv = document.getElementById("ingresoForm");
 
   ingresoDiv.innerHTML = `
-    <form id="userForm">
-    <label id="name">Nombre:</label>
-    <input type="text" name="name" id="userName" />
-    <input type="submit" value="Registrarse" />
+    <form id="userForm" class="d-flex flex-column align-items-center">
+      <label for="userName" class="form-label mb-2 p-2">Nombre:</label>
+      <input type="text" name="name" id="userName" class="form-control-sm w-50 mb-2 p-2" />
+      <input type="submit" class="btn btn-success w-auto mb-2 p-2" value="Registrarse" />
     </form>
     `;
 

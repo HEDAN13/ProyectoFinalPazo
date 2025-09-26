@@ -16,33 +16,45 @@
     <script src="./js/app.js" defer></script>
     <title>Simulador | entrega2</title>
   </head>
+
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="#">
-          <img src="./assets/Logo-NejoOut.png" alt="Logo" />
-        </a>
-        <button id="identificarse">Ingresar</button>
-      </nav>
+      <a class="navbar-brand" href="#">
+        <img src="./assets/Logo-NejoOut.png" alt="Logo" />
+      </a>
+
+      <button id="identificarse">Ingresar</button>
     </header>
 
     <!-- Principal -->
     <main>
       <section class="principal">
         <h1 id="saludo">Visitante le damos la bienvenida!</h1>
+        <img
+          src="./assets/principal.jpg"
+          alt="Imagen principal"
+          class="imagen-principal"
+        />
         <h2>Se encuentra abierta la venta de comisiones</h2>
         <p id="primerParrafo">
           Por favor ingresa tu nombre para poder acceder a las opciones de
           comisiones.
         </p>
         <div id="ingresoForm"></div>
-        <div id="mostrarCards" class="row"></div>
+        <div id="mostrarCards" class="d-flex justify-content-evenly pb-3"></div>
       </section>
     </main>
 
     <!-- Pie de página -->
     <footer>
       <div class="social-media">
+        <a
+          class="social-link page"
+          href="https://nejoout.tez.page/"
+          target="_blank"
+        >
+          <img src="./assets/WebPage.png" alt="Portfolio" />
+        </a>
         <a
           class="social-link"
           href="https://www.instagram.com/nejoout"
