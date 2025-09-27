@@ -48,6 +48,71 @@ function main() {
 }
 
 /**
+ * Recibo un el elemento HTML del botón para que una vez registrado el nombre, pueda actualizar el contenido del botón y mostrar "Salir".
+ * Muestro el formulario que solicita el nombre y luego cambio los elementos del DOM de acuerdo con el nombre recibido, el cual además es almacenado en el LocalStorage.
+ *
+ * @param {HTMLElement | null} ingreso
+ */
+function userForm(ingreso) {
+  const ingresoDiv = document.getElementById("ingresoForm");
+
+  ingresoDiv.innerHTML = `
+    <form id="userForm" class="d-flex flex-column align-items-center">
+      <label for="userName" class="form-label mb-2 p-2">Nombre:</label>
+      <input type="text" name="name" id="userName" class="form-control-sm w-50 mb-2 p-2" />
+      <input type="submit" class="btn btn-success w-auto mb-2 p-2" value="Registrarse" />
+    </form>
+    `;
+
+  const form = document.getElementById("userForm");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const name = document.getElementById("userName");
+    localStorage.setItem("nombreUsuario", name.value);
+    form.reset();
+    ingresoDiv.innerHTML = ``;
+    ingreso.textContent = "Salir";
+    const nombreGuardado = localStorage.getItem("nombreUsuario");
+    cambiarSaludo(nombreGuardado);
+    cambiarPrimerParrafo(nombreGuardado);
+    mostrarOpciones(nombreGuardado);
+    window.scrollTo(0, 0);
+  });
+}
+
+/**
+ * Recibo un string o un null, para cambiar el mensaje de bienvenida al sitio.
+ *
+ * @param {String | null} nombreGuardado
+ */
+
+function cambiarSaludo(nombreGuardado) {
+  const saludo = document.getElementById("saludo");
+  if (nombreGuardado) {
+    saludo.innerText = `${nombreGuardado} te damos la bienvenida!`;
+  } else {
+    saludo.innerText = `Visitante le damos la bienvenida!`;
+  }
+}
+
+/**
+ * Recibo el nombre almacenado en localStorage, para cambiar el mensaje del párrafo, de acuerdo a lo recibido.
+ *
+ * @param {String | null} nombreGuardado
+ */
+
+function cambiarPrimerParrafo(nombreGuardado) {
+  const parrafo = document.getElementById("primerParrafo");
+  if (nombreGuardado) {
+    parrafo.innerText = `Por favor seleccione el tipo de comisión que desea encargar:`;
+  } else {
+    parrafo.innerText =
+      "Por favor ingresa tu nombre para poder acceder a las opciones de comisiones.";
+  }
+}
+
+/**
  * Recibo un nombre o un valor null, para indicar que el valor del nombre se encuentra en el localStorage y muestro las cards con las opciones para seleccionar el tipo de comisión.
  *
  * @param {String | null} nombre
@@ -162,71 +227,6 @@ function mostrarSubtotal() {
           </div>
       `;
     }
-  }
-}
-
-/**
- * Recibo un el elemento HTML del botón para que una vez registrado el nombre, pueda actualizar el contenido del botón y mostrar "Salir".
- * Muestro el formulario que solicita el nombre y luego cambio los elementos del DOM de acuerdo con el nombre recibido, el cual además es almacenado en el LocalStorage.
- *
- * @param {HTMLElement | null} ingreso
- */
-function userForm(ingreso) {
-  const ingresoDiv = document.getElementById("ingresoForm");
-
-  ingresoDiv.innerHTML = `
-    <form id="userForm" class="d-flex flex-column align-items-center">
-      <label for="userName" class="form-label mb-2 p-2">Nombre:</label>
-      <input type="text" name="name" id="userName" class="form-control-sm w-50 mb-2 p-2" />
-      <input type="submit" class="btn btn-success w-auto mb-2 p-2" value="Registrarse" />
-    </form>
-    `;
-
-  const form = document.getElementById("userForm");
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const name = document.getElementById("userName");
-    localStorage.setItem("nombreUsuario", name.value);
-    form.reset();
-    ingresoDiv.innerHTML = ``;
-    ingreso.textContent = "Salir";
-    const nombreGuardado = localStorage.getItem("nombreUsuario");
-    cambiarSaludo(nombreGuardado);
-    cambiarPrimerParrafo(nombreGuardado);
-    mostrarOpciones(nombreGuardado);
-    window.scrollTo(0, 0);
-  });
-}
-
-/**
- * Recibo un string o un null, para cambiar el mensaje de bienvenida al sitio.
- *
- * @param {String | null} nombreGuardado
- */
-
-function cambiarSaludo(nombreGuardado) {
-  const saludo = document.getElementById("saludo");
-  if (nombreGuardado) {
-    saludo.innerText = `${nombreGuardado} te damos la bienvenida!`;
-  } else {
-    saludo.innerText = `Visitante le damos la bienvenida!`;
-  }
-}
-
-/**
- * Recibo el nombre almacenado en localStorage, para cambiar el mensaje del párrafo, de acuerdo a lo recibido.
- *
- * @param {String | null} nombreGuardado
- */
-
-function cambiarPrimerParrafo(nombreGuardado) {
-  const parrafo = document.getElementById("primerParrafo");
-  if (nombreGuardado) {
-    parrafo.innerText = `Por favor seleccione el tipo de comisión que desea encargar:`;
-  } else {
-    parrafo.innerText =
-      "Por favor ingresa tu nombre para poder acceder a las opciones de comisiones.";
   }
 }
 
