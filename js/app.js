@@ -150,7 +150,7 @@ function mostrarSubtotal() {
       subtotalDiv.innerHTML = `
           <div class="col-12">
             <h3>Subtotal &rarr; $${subtotal}</h3>
-            <button class="bg-info">Ver selección</button>
+            <button class="btn btn-info" disabled>Ver selección</button>
           </div>
       `;
       container.appendChild(subtotalDiv);
@@ -158,7 +158,7 @@ function mostrarSubtotal() {
       subtotalDiv.innerHTML = `
           <div class="col-12">
             <h3>Subtotal &rarr; $${subtotal}</h3>
-            <button class="bg-info">Ver selección</button>
+            <button class="btn btn-info" disabled>Ver selección</button>
           </div>
       `;
     }
@@ -195,6 +195,7 @@ function userForm(ingreso) {
     cambiarSaludo(nombreGuardado);
     cambiarPrimerParrafo(nombreGuardado);
     mostrarOpciones(nombreGuardado);
+    window.scrollTo(0, 0);
   });
 }
 

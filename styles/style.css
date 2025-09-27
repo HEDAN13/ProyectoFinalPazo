@@ -35,6 +35,10 @@ header a img {
   margin: 15px;
 }
 
+main {
+  background-color: #fab2b3;
+}
+
 main button {
   background-color: #fab2b3;
   color: black;
@@ -45,12 +49,13 @@ main button {
   margin-bottom: 10px;
 }
 
-main {
-  background-color: #fab2b3;
-}
-
 .principal {
   text-align: center;
+}
+
+p {
+  margin: 20px 50px 10px 50px;
+  font-size: 20px;
 }
 
 .imagen-principal {
