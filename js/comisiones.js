@@ -1,5 +1,8 @@
 import { mostrarSubtotal } from "./interfaceUsuario.js";
-import { mostrarToastError } from "./notificaciones.js";
+import {
+  confirmarAgregarProducto,
+  mostrarToastError,
+} from "./notificaciones.js";
 import {
   loadComisiones,
   saveComisiones,
@@ -46,9 +49,7 @@ export async function mostrarCardsComisiones() {
     const listaComisiones = await obtenerListaComisiones();
 
     listaComisiones.forEach((comision) => {
-      // console.log("se ingresó a la lista de comisiones");
       contenedor.appendChild(crearTarjetaComision(comision));
-      mostrarSubtotal();
     });
     div.appendChild(contenedor);
     mostrarSubtotal();
@@ -60,55 +61,46 @@ export async function mostrarCardsComisiones() {
 }
 
 function crearTarjetaComision(comision) {
-  const coms = loadComisiones();
-  const cantidad = coms.reduce(
-    (acc, com) => {
-      acc[com.type] = (acc[com.type] || 0) + 1;
-      return acc;
-    },
-    {
-      "Ilustración para perfil de redes sociales": 0,
-      "Ilustración medio cuerpo": 0,
-      "Ilustración de mascota": 0,
-    }
-  );
+  const obtenerCantidadActual = (tipo) => {
+    const coms = loadComisiones();
+    return coms.filter((com) => com.type === tipo).length;
+  };
 
   const tarjeta = document.createElement("div");
   tarjeta.style.width = "18rem";
   tarjeta.classList.add("card");
-  //console.log(tarjeta);
+
+  const cantidadInicial = obtenerCantidadActual(comision.titulo);
 
   tarjeta.innerHTML = `
     <img src="${comision.img}" class="card-img-top" alt="${comision.titulo}">
     <div class="card-body">
       <h5 class="card-title">${comision.titulo}</h5>
-      <p class="card-text"><strong id="precio${comision.corto}">${
-    comision.precio
-  } ${comision.moneda}</strong> - ${comision.caracteristicas}</p>
-      <button class="btn btn-warning" id="agrega${
-        comision.corto
-      }">Agregar</button>
-      <p class="card-text" id="cantidad${comision.corto}">${
-    cantidad[comision.titulo]
-  }</p>
+      <p class="card-text"><strong id="precio${comision.corto}">${comision.precio} ${comision.moneda}</strong> - ${comision.caracteristicas}</p>
+      <button class="btn btn-warning" id="agrega${comision.corto}">Agregar</button>
+      <p class="card-text" id="cantidad${comision.corto}">${cantidadInicial}</p>
     </div>
   `;
 
   const botonAgregar = tarjeta.querySelector(`#agrega${comision.corto}`);
-  botonAgregar.addEventListener("click", () => {
+  botonAgregar.addEventListener("click", async () => {
+    const resultado = await confirmarAgregarProducto(comision.titulo);
+
+    if (resultado.isDenied || resultado.isDismissed) {
+      return;
+    }
+
     const cantidadTipo = tarjeta.querySelector(`#cantidad${comision.corto}`);
     const com = {
       type: comision.titulo,
       price: comision.precio,
     };
     addComision(com);
-    setCantidad(
-      `cantidad${comision.corto}`,
-      parseInt(cantidad[comision.titulo]) + 1
-    );
-    let cant = parseInt(cantidad[comision.titulo]);
-    cant++;
-    cantidadTipo.textContent = cant;
+
+    const nuevaCantidad = obtenerCantidadActual(comision.titulo);
+    cantidadTipo.textContent = nuevaCantidad;
+    setCantidad(comision.titulo, nuevaCantidad);
+
     mostrarSubtotal();
   });
 

@@ -5,6 +5,9 @@ import {
   mostrarCardsComisiones,
 } from "./comisiones.js";
 import { getNombreUsuario, setNombreUsuario, clearStorage } from "./storage.js";
+import { mostrarCarrito } from "./notificaciones.js";
+import { agruparCarrito } from "./carrito.js";
+import { formatoMoneda } from "./valores.js";
 
 /**
  * Recibe una cadena y modifica el saludo inicial con el nombre de usuario.
@@ -92,13 +95,16 @@ export function origen() {
  * @param {String || null} nombre
  * @returns
  */
-export function mostrarOpciones(nombre) {
+export async function mostrarOpciones(nombre) {
   const mostrarDiv = document.getElementById("mostrarCards");
+  const selectorMoneda = document.getElementById("selector-moneda");
   if (!nombre) {
     mostrarDiv.innerHTML = "";
+    selectorMoneda.innerHTML = "";
     return;
   }
 
+  selectorMoneda.appendChild(await formatoMoneda());
   mostrarCardsComisiones();
 }
 
@@ -107,21 +113,20 @@ export function mostrarOpciones(nombre) {
  */
 export function mostrarSubtotal() {
   const subtotal = calcularPrecioComisiones();
-  const container = document.getElementById("mostrarCards");
-  let subtotalDiv = document.getElementById("subtotal");
-  const html = `
-    <div class="col-12">
-      <h3>Subtotal → $${subtotal}</h3>
-      <button class="btn btn-info" disabled>Ver selección</button>
+  const container = document.getElementById("subtotalContainer");
+
+  container.innerHTML = `
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <h3>Subtotal → $${subtotal}</h3>
+        <button class="btn btn-info mb-3">Ver carrito</button>
+      </div>
     </div>
   `;
-  if (!subtotalDiv) {
-    subtotalDiv = document.createElement("div");
-    subtotalDiv.classList.add("row");
-    subtotalDiv.id = "subtotal";
-    subtotalDiv.innerHTML = html;
-    container.appendChild(subtotalDiv);
-  } else {
-    subtotalDiv.innerHTML = html;
-  }
+
+  const botonCarrito = container.querySelector(".btn-info");
+  botonCarrito.addEventListener("click", () => {
+    const carrito = agruparCarrito(loadComisiones());
+    mostrarCarrito(carrito);
+  });
 }

@@ -1,38 +1,157 @@
 [
   {
-    "Code": "ARS",
-    "Nombre": "Peso argentino"
+    "Code": "AUD",
+    "Nombre": "Dólar australiano",
+    "Conversion": "1.5382"
+  },
+  {
+    "Code": "BGN",
+    "Nombre": "Lev búlgaro",
+    "Conversion": "1.6843"
   },
   {
     "Code": "BRL",
-    "Nombre": "Real brasileño"
+    "Nombre": "Real brasileño",
+    "Conversion": "5.3884"
   },
   {
-    "Code": "BTC",
-    "Nombre": "Bitcoin"
+    "Code": "CAD",
+    "Nombre": "Dólar canadiense",
+    "Conversion": "1.4025"
   },
   {
-    "Code": "CLP",
-    "Nombre": "Peso chileno"
+    "Code": "CHF",
+    "Nombre": "Franco suizo",
+    "Conversion": "0.79642"
   },
   {
-    "Code": "COP",
-    "Nombre": "Peso colombiano"
+    "Code": "CNY",
+    "Nombre": "Yuan chino",
+    "Conversion": "7.1225"
+  },
+  {
+    "Code": "CZK",
+    "Nombre": "Corona checa",
+    "Conversion": "20.958"
+  },
+  {
+    "Code": "DKK",
+    "Nombre": "Corona danesa",
+    "Conversion": "6.4328"
   },
   {
     "Code": "EUR",
-    "Nombre": "Euro"
+    "Nombre": "Euro",
+    "Conversion": "0.86118"
   },
   {
-    "Code": "PYG",
-    "Nombre": "Guaraní paraguayo"
+    "Code": "GBP",
+    "Nombre": "Libra esterlina británica",
+    "Conversion": "0.75146"
+  },
+  {
+    "Code": "HKD",
+    "Nombre": "Dólar de Hong Kong",
+    "Conversion": "7.7697"
+  },
+  {
+    "Code": "HUF",
+    "Nombre": "Forinto húngaro",
+    "Conversion": "335.47"
+  },
+  {
+    "Code": "IDR",
+    "Nombre": "Rupia indonesia",
+    "Conversion": "16608"
+  },
+  {
+    "Code": "ILS",
+    "Nombre": "Nuevo Sheqel israelí",
+    "Conversion": "3.2893"
+  },
+  {
+    "Code": "INR",
+    "Nombre": "Rupia india",
+    "Conversion": "87.81"
+  },
+  {
+    "Code": "ISK",
+    "Nombre": "Corona islandesa",
+    "Conversion": "122.63"
+  },
+  {
+    "Code": "JPY",
+    "Nombre": "Yen japonés",
+    "Conversion": "152.9"
+  },
+  {
+    "Code": "KRW",
+    "Nombre": "Won surcoreano",
+    "Conversion": "1439.45"
+  },
+  {
+    "Code": "MXN",
+    "Nombre": "Peso mexicano",
+    "Conversion": "18.4051"
+  },
+  {
+    "Code": "MYR",
+    "Nombre": "Ringgit malayo",
+    "Conversion": "4.223"
+  },
+  {
+    "Code": "NOK",
+    "Nombre": "Corona noruega",
+    "Conversion": "10.0056"
+  },
+  {
+    "Code": "NZD",
+    "Nombre": "Dólar neozelandés",
+    "Conversion": "1.7408"
+  },
+  {
+    "Code": "PHP",
+    "Nombre": "Peso filipino",
+    "Conversion": "58.632"
+  },
+  {
+    "Code": "PLN",
+    "Nombre": "Zloty polaco",
+    "Conversion": "3.6521"
+  },
+  {
+    "Code": "RON",
+    "Nombre": "Leu rumano",
+    "Conversion": "4.3777"
+  },
+  {
+    "Code": "SEK",
+    "Nombre": "Corona sueca",
+    "Conversion": "9.3903"
+  },
+  {
+    "Code": "SGD",
+    "Nombre": "Dólar de Singapur",
+    "Conversion": "1.2994"
+  },
+  {
+    "Code": "THB",
+    "Nombre": "Baht tailandés",
+    "Conversion": "32.755"
+  },
+  {
+    "Code": "TRY",
+    "Nombre": "Lira turca",
+    "Conversion": "41.978"
+  },
+  {
+    "Code": "ZAR",
+    "Nombre": "Rand sudafricano",
+    "Conversion": "17.3286"
   },
   {
     "Code": "USD",
-    "Nombre": "Dólar estadounidense"
-  },
-  {
-    "Code": "UYU",
-    "Nombre": "Peso uruguayo"
+    "Nombre": "Dólar Norteamericano",
+    "Conversion": "1"
   }
 ]

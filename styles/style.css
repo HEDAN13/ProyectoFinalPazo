@@ -99,3 +99,15 @@ footer .container {
   border: white solid 0.01px;
   border-radius: 50%;
 }
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body.swal2-shown {
+  padding-right: 0 !important;
+}

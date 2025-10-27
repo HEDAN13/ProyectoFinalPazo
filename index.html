@@ -18,12 +18,16 @@
   </head>
 
   <body>
-    <header>
-      <div class="col-2"></div>
-      <a class="navbar-brand col-8" href="#">
-        <img src="./assets/img/Logo-NejoOut.png" alt="Logo" />
-      </a>
-      <div class="col-2 align-self-end mb-2 pb-2" id="selector-moneda"></div>
+    <header class="p-1">
+      <div class="col-3"></div>
+      <div class="col-6">
+        <a class="navbar-brand" href="#">
+          <img src="./assets/img/Logo-NejoOut.png" alt="Logo" />
+        </a>
+      </div>
+      <div class="col-3 p-3">
+        <div class="mt-4" id="selector-moneda"></div>
+      </div>
     </header>
 
     <!-- Principal -->
@@ -43,6 +47,7 @@
 
         <div id="ingresoForm"></div>
         <div id="mostrarCards" class="d-flex flex-column pb-3"></div>
+        <div class="container mt-3" id="subtotalContainer"></div>
         <button id="identificarse">Ingresar</button>
       </section>
     </main>
