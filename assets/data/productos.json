@@ -1,0 +1,26 @@
+[
+  {
+    "titulo": "Ilustración para perfil de redes sociales",
+    "corto": "Perfil",
+    "precio": 25,
+    "moneda": "USD",
+    "caracteristicas": "Digital / Color / 300 dpi y 75 dpi",
+    "img": "./assets/img/imagenPerfil.jpg"
+  },
+  {
+    "titulo": "Ilustración medio cuerpo",
+    "corto": "Medio",
+    "precio": 60,
+    "moneda": "USD",
+    "caracteristicas": "Digital / Color / 300 dpi",
+    "img": "./assets/img/medioCuerpo.jpeg"
+  },
+  {
+    "titulo": "Ilustración de mascota",
+    "corto": "Mascota",
+    "precio": 30,
+    "moneda": "USD",
+    "caracteristicas": "Digital / Color / 300 dpi",
+    "img": "./assets/img/mascota.jpeg"
+  }
+]

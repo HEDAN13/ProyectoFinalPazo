@@ -1,7 +1,16 @@
 import { loadComisiones, setCantidad } from "./storage.js";
-import { addComision, calcularPrecioComisiones } from "./comisiones.js";
+import {
+  addComision,
+  calcularPrecioComisiones,
+  mostrarCardsComisiones,
+} from "./comisiones.js";
 import { getNombreUsuario, setNombreUsuario, clearStorage } from "./storage.js";
 
+/**
+ * Recibe una cadena y modifica el saludo inicial con el nombre de usuario.
+ * En caso de recibir un valor nulo o indefinido, coloca el saludo por defecto.
+ * @param {String || null} nombre
+ */
 export function cambiarSaludo(nombre) {
   const saludo = document.getElementById("saludo");
   saludo.innerText = nombre
@@ -9,6 +18,11 @@ export function cambiarSaludo(nombre) {
     : "Visitante le damos la bienvenida!";
 }
 
+/**
+ * Recibe una cadena y modifica el primer párrafo indicando que se puede acceder a la selección de comisiones.
+ * En caso de recibir un valor nulo o indefinido, coloca el mensaje por defecto.
+ * @param {String || null} nombre
+ */
 export function cambiarPrimerParrafo(nombre) {
   const parrafo = document.getElementById("primerParrafo");
   parrafo.innerText = nombre
@@ -45,7 +59,7 @@ export function origen() {
       ingresoDiv.innerHTML = `
         <form id="userForm" class="d-flex flex-column align-items-center">
           <label for="userName" class="form-label mb-2 p-2">Nombre:</label>
-          <input type="text" name="name" id="userName" class="form-control-sm w-50 mb-2 p-2" />
+          <input type="text" placeholder="Por favor ingresa tu nombre" name="name" id="userName" class="form-control-sm w-50 mb-2 p-2" />
           <input type="submit" class="btn btn-success w-auto mb-2 p-2" value="Registrarse" />
         </form>
       `;
@@ -73,6 +87,11 @@ export function origen() {
   });
 }
 
+/**
+ * Se encarga de cargar las cards con las opciones de comisiones.
+ * @param {String || null} nombre
+ * @returns
+ */
 export function mostrarOpciones(nombre) {
   const mostrarDiv = document.getElementById("mostrarCards");
   if (!nombre) {
@@ -80,73 +99,12 @@ export function mostrarOpciones(nombre) {
     return;
   }
 
-  const coms = loadComisiones();
-  const cantidad = coms.reduce(
-    (acc, com) => {
-      acc[com.type] = (acc[com.type] || 0) + 1;
-      return acc;
-    },
-    {
-      "Ilustración para perfil de redes sociales": 0,
-      "Ilustración medio cuerpo": 0,
-      "Ilustración de mascota": 0,
-    }
-  );
-
-  mostrarDiv.innerHTML = `
-    <div class="row justify-content-evenly pb-3">
-    <div class="card" style="width: 18rem;">
-      <img src="./assets/imagenPerfil.jpg" class="card-img-top" alt="Ejemplo de imagen de perfil">
-      <div class="card-body">
-        <h5 class="card-title">Ilustración para perfil de redes sociales</h5>
-        <p class="card-text"><strong id="precioPerfil">$25 usd</strong> - Digital / Color / 300 dpi y 75 dpi</p>
-        <button class="btn btn-warning" id="agregaPerfil">Agregar</button>
-        <p class="card-text" id="cantidadPerfil">${cantidad["Ilustración para perfil de redes sociales"]}</p>
-      </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-      <img src="./assets/medioCuerpo.jpeg" class="card-img-top" alt="Ejemplo de imagen medio cuerpo">
-      <div class="card-body">
-        <h5 class="card-title">Ilustración medio cuerpo</h5>
-        <p class="card-text"><strong id="precioMedio">$60 usd</strong> - Digital / Color / 300 dpi</p>
-        <button class="btn btn-warning" id="agregaMedio">Agregar</button>
-        <p class="card-text" id="cantidadMedio">${cantidad["Ilustración medio cuerpo"]}</p>
-      </div>
-    </div>
-    <div class="card" style="width: 18rem;">
-      <img src="./assets/mascota.jpeg" class="card-img-top" alt="Ejemplo de mascota">
-      <div class="card-body">
-        <h5 class="card-title">Ilustración de mascota</h5>
-        <p class="card-text"><strong id="precioMascota">$30 usd</strong> - Digital / Color / 300 dpi</p>
-        <button class="btn btn-warning" id="agregaMascota">Agregar</button>
-        <p class="card-text" id="cantidadMascota">${cantidad["Ilustración de mascota"]}</p>
-      </div>
-    </div>
-  </div>
-  `;
-
-  const botones = mostrarDiv.querySelectorAll("button");
-  botones.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const cardBody = btn.closest(".card-body");
-      const pCantidad = cardBody.querySelector("p.card-text:last-of-type");
-
-      const comision = {
-        type: cardBody.querySelector(".card-title").textContent,
-        price: cardBody.querySelector("strong").textContent.replace(/\D/g, ""),
-      };
-
-      const com = addComision(comision);
-
-      setCantidad(pCantidad.id, parseInt(pCantidad.textContent) + 1);
-      let cantidad = parseInt(pCantidad.textContent);
-      cantidad++;
-      pCantidad.textContent = cantidad;
-      mostrarSubtotal();
-    });
-  });
+  mostrarCardsComisiones();
 }
 
+/**
+ * Calcula el subtotal y lo muestra debajo de las cards
+ */
 export function mostrarSubtotal() {
   const subtotal = calcularPrecioComisiones();
   const container = document.getElementById("mostrarCards");

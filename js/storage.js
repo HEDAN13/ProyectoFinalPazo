@@ -26,7 +26,11 @@ export function getComisionId() {
 export function setComisionId(id) {
   localStorage.setItem("proximoId", JSON.stringify(id));
 }
-
+/**
+ * Guarda el id de la comisión y la cantidad solicitada
+ * @param {String} id
+ * @param {String} cant
+ */
 export function setCantidad(id, cant) {
   localStorage.setItem(id, cant);
 }

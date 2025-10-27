@@ -1,0 +1,38 @@
+[
+  {
+    "Code": "ARS",
+    "Nombre": "Peso argentino"
+  },
+  {
+    "Code": "BRL",
+    "Nombre": "Real brasileño"
+  },
+  {
+    "Code": "BTC",
+    "Nombre": "Bitcoin"
+  },
+  {
+    "Code": "CLP",
+    "Nombre": "Peso chileno"
+  },
+  {
+    "Code": "COP",
+    "Nombre": "Peso colombiano"
+  },
+  {
+    "Code": "EUR",
+    "Nombre": "Euro"
+  },
+  {
+    "Code": "PYG",
+    "Nombre": "Guaraní paraguayo"
+  },
+  {
+    "Code": "USD",
+    "Nombre": "Dólar estadounidense"
+  },
+  {
+    "Code": "UYU",
+    "Nombre": "Peso uruguayo"
+  }
+]
