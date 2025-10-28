@@ -50,7 +50,8 @@ Interacciones principales:
 
    - Con http-server (npm):
      ```
-     npm http-server . -p 5500
+     npm install
+     npm run dev
      ```
      Abrir: http://localhost:5500
 
