@@ -1,3 +1,10 @@
+import { loadMonedaSeleccionada, loadValores } from "./storage.js";
+
+/**
+ * Genera un elemento <select> con las opciones de monedas disponibles.
+ * @param {String} nombreProducto
+ * @returns {Promise<Swal.Fire>}
+ */
 export function confirmarAgregarProducto(nombreProducto) {
   return Swal.fire({
     title: "¿Agregar al carrito?",
@@ -10,19 +17,10 @@ export function confirmarAgregarProducto(nombreProducto) {
   });
 }
 
-export function confirmarEliminarProducto(nombreProducto) {
-  return Swal.fire({
-    title: "¿Eliminar del carrito?",
-    text: `"¿Deseas eliminar "${nombreProducto}" del carrito?`,
-    icon: "warning",
-    showDenyButton: true,
-    confirmButtonText: "Si, eliminar",
-    denyButtonText: "Cancelar",
-    confirmButtonColor: "#e74c3c",
-    denyButtonColor: "#95a5a6",
-  });
-}
-
+/**
+ * Muestra una notificación de éxito con un mensaje personalizado.
+ * @param {String} mensaje
+ */
 export function mostrarToastExito(mensaje) {
   Swal.fire({
     toast: true,
@@ -35,6 +33,10 @@ export function mostrarToastExito(mensaje) {
   });
 }
 
+/**
+ * Muestra una notificación de error con un mensaje personalizado.
+ * @param {String} mensaje
+ */
 export function mostrarToastError(mensaje) {
   Swal.fire({
     toast: true,
@@ -47,9 +49,20 @@ export function mostrarToastError(mensaje) {
   });
 }
 
+/**
+ * Muestra el contenido del carrito en una ventana modal.
+ * @param {Object[]} carrito
+ */
 export function mostrarCarrito(carrito) {
+  const moneda = loadMonedaSeleccionada();
+  const conversion = moneda
+    ? Number(
+        (loadValores().find((v) => v.Code === moneda) || { Conversion: 1 })
+          .Conversion
+      ) || 1
+    : 1;
   const total = carrito.reduce(
-    (acc, prod) => acc + parseFloat(prod.price) * prod.cantidad,
+    (acc, prod) => acc + parseFloat(prod.price) * conversion * prod.cantidad,
     0
   );
 
@@ -57,10 +70,10 @@ export function mostrarCarrito(carrito) {
     <table style="width:100%; text-align:left; border-collapse:collapse;">
       <thead>
         <tr>
-          <th style="border-bottom:1px solid #ccc; padding:6px;">Producto</th>
-          <th style="border-bottom:1px solid #ccc; padding:6px;">Cantidad</th>
-          <th style="border-bottom:1px solid #ccc; padding:6px;">Precio unitario</th>
-          <th style="border-bottom:1px solid #ccc; padding:6px;">Subtotal</th>
+          <th style="border-bottom:1px solid #ccc; padding:4px;">Producto</th>
+          <th style="border-bottom:1px solid #ccc; padding:4px;">Cantidad</th>
+          <th style="border-bottom:1px solid #ccc; padding:4px;">Precio unitario</th>
+          <th style="border-bottom:1px solid #ccc; padding:4px;">Subtotal</th>
         </tr>
       </thead>
       <tbody>
@@ -70,9 +83,13 @@ export function mostrarCarrito(carrito) {
           <tr>
             <td style="padding:6px;">${prod.type}</td>
             <td style="padding:6px; text-align:center;">${prod.cantidad}</td>
-            <td style="padding:6px;">$${prod.price}</td>
+            <td style="padding:6px;">$${(prod.price * conversion).toFixed(
+              2
+            )}</td>
             <td style="padding:6px;">$${(
-              parseFloat(prod.price) * prod.cantidad
+              parseFloat(prod.price) *
+              conversion *
+              prod.cantidad
             ).toFixed(2)}</td>
           </tr>`
           )

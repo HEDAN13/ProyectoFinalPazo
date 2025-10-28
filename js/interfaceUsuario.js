@@ -1,6 +1,10 @@
-import { loadComisiones, setCantidad } from "./storage.js";
 import {
-  addComision,
+  loadComisiones,
+  loadValores,
+  saveMonedaSeleccionada,
+  loadMonedaSeleccionada,
+} from "./storage.js";
+import {
   calcularPrecioComisiones,
   mostrarCardsComisiones,
 } from "./comisiones.js";
@@ -47,7 +51,7 @@ export function origen() {
     cambiarSaludo(nombreGuardado);
     cambiarPrimerParrafo(nombreGuardado);
     mostrarOpciones(nombreGuardado);
-    mostrarSubtotal();
+    actualizarPreciosPorMoneda(loadMonedaSeleccionada());
   } else {
     ingreso.textContent = "Ingresar";
     clearStorage();
@@ -105,20 +109,49 @@ export async function mostrarOpciones(nombre) {
   }
 
   selectorMoneda.appendChild(await formatoMoneda());
+
+  const selectElem = selectorMoneda.querySelector("select");
+
+  const monedaGuardada = loadMonedaSeleccionada() ?? selectElem.value;
+  saveMonedaSeleccionada(monedaGuardada);
+
+  if (monedaGuardada) {
+    selectElem.value = monedaGuardada;
+
+    actualizarPreciosPorMoneda(monedaGuardada);
+  } else {
+    const inicial = selectElem.value || "USD";
+    actualizarPreciosPorMoneda(inicial);
+  }
+
+  selectElem.addEventListener("change", () => {
+    const monedaSeleccionada = selectElem.value;
+    actualizarPreciosPorMoneda(monedaSeleccionada);
+    saveMonedaSeleccionada(monedaSeleccionada);
+  });
+
   mostrarCardsComisiones();
 }
 
 /**
- * Calcula el subtotal y lo muestra debajo de las cards
+ * Muestra el subtotal de las comisiones en la moneda seleccionada.
+ * @param {String} moneda
  */
-export function mostrarSubtotal() {
+export function mostrarSubtotal(moneda) {
   const subtotal = calcularPrecioComisiones();
   const container = document.getElementById("subtotalContainer");
+  const conversion = moneda
+    ? Number(
+        (loadValores().find((v) => v.Code === moneda) || { Conversion: 1 })
+          .Conversion
+      ) || 1
+    : 1;
+  const subtotalConvertido = (subtotal * conversion).toFixed(2);
 
   container.innerHTML = `
     <div class="row justify-content-center">
       <div class="col-12 text-center">
-        <h3>Subtotal → $${subtotal}</h3>
+        <h3>Subtotal → ${subtotalConvertido} ${moneda}</h3>
         <button class="btn btn-info mb-3">Ver carrito</button>
       </div>
     </div>
@@ -129,4 +162,28 @@ export function mostrarSubtotal() {
     const carrito = agruparCarrito(loadComisiones());
     mostrarCarrito(carrito);
   });
+}
+
+/**
+ * Actualiza los precios mostrados en las tarjetas según la moneda seleccionada.
+ * @param {String} monedaSeleccionada
+ */
+export function actualizarPreciosPorMoneda(monedaSeleccionada) {
+  const valores = loadValores();
+  const factor =
+    Number(
+      (valores.find((v) => v.Code === monedaSeleccionada) || { Conversion: 1 })
+        .Conversion
+    ) || 1;
+
+  document.querySelectorAll("[id^='precio']").forEach((elem) => {
+    const usd = Number(elem.dataset.usd);
+    if (!Number.isNaN(usd)) {
+      const nuevo = (usd * factor).toFixed(2);
+
+      elem.textContent = `${nuevo} ${monedaSeleccionada}`;
+    }
+  });
+
+  mostrarSubtotal(monedaSeleccionada);
 }

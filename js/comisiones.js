@@ -1,7 +1,11 @@
-import { mostrarSubtotal } from "./interfaceUsuario.js";
+import {
+  mostrarSubtotal,
+  actualizarPreciosPorMoneda,
+} from "./interfaceUsuario.js";
 import {
   confirmarAgregarProducto,
   mostrarToastError,
+  mostrarToastExito,
 } from "./notificaciones.js";
 import {
   loadComisiones,
@@ -9,6 +13,7 @@ import {
   getComisionId,
   setComisionId,
   setCantidad,
+  loadMonedaSeleccionada,
 } from "./storage.js";
 
 /**
@@ -35,12 +40,19 @@ export function addComision({ type, price }) {
   return com;
 }
 
+/**
+ * Obtiene la lista de comisiones desde el archivo JSON
+ * @returns {Promise<Array>}
+ */
 async function obtenerListaComisiones() {
   const response = await fetch("./assets/data/productos.json");
   const data = await response.json();
   return data;
 }
 
+/**
+ * Se encarga de crear y mostrar las cards con las opciones de comisiones.
+ */
 export async function mostrarCardsComisiones() {
   try {
     const div = document.getElementById("mostrarCards");
@@ -52,7 +64,7 @@ export async function mostrarCardsComisiones() {
       contenedor.appendChild(crearTarjetaComision(comision));
     });
     div.appendChild(contenedor);
-    mostrarSubtotal();
+    actualizarPreciosPorMoneda(loadMonedaSeleccionada());
   } catch (error) {
     mostrarToastError(
       `A ocurrido un error en la creación de las tarjetas: ${error}`
@@ -60,6 +72,11 @@ export async function mostrarCardsComisiones() {
   }
 }
 
+/**
+ * Crea una tarjeta de comisión
+ * @param {Object} comision
+ * @returns {HTMLElement}
+ */
 function crearTarjetaComision(comision) {
   const obtenerCantidadActual = (tipo) => {
     const coms = loadComisiones();
@@ -76,7 +93,7 @@ function crearTarjetaComision(comision) {
     <img src="${comision.img}" class="card-img-top" alt="${comision.titulo}">
     <div class="card-body">
       <h5 class="card-title">${comision.titulo}</h5>
-      <p class="card-text"><strong id="precio${comision.corto}">${comision.precio} ${comision.moneda}</strong> - ${comision.caracteristicas}</p>
+      <p class="card-text"><strong id="precio${comision.corto}" data-usd="${comision.precio}">${comision.precio} ${comision.moneda}</strong> - ${comision.caracteristicas}</p>
       <button class="btn btn-warning" id="agrega${comision.corto}">Agregar</button>
       <p class="card-text" id="cantidad${comision.corto}">${cantidadInicial}</p>
     </div>
@@ -89,6 +106,7 @@ function crearTarjetaComision(comision) {
     if (resultado.isDenied || resultado.isDismissed) {
       return;
     }
+    mostrarToastExito(`Se ha agregado "${comision.titulo}" al carrito.`);
 
     const cantidadTipo = tarjeta.querySelector(`#cantidad${comision.corto}`);
     const com = {
@@ -101,7 +119,7 @@ function crearTarjetaComision(comision) {
     cantidadTipo.textContent = nuevaCantidad;
     setCantidad(comision.titulo, nuevaCantidad);
 
-    mostrarSubtotal();
+    mostrarSubtotal(loadMonedaSeleccionada());
   });
 
   return tarjeta;

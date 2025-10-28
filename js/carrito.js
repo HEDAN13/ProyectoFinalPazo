@@ -1,3 +1,8 @@
+/**
+ * Agrupa los productos en el carrito por su tipo y cuenta las cantidades.
+ * @param {Object[]} carrito
+ * @returns {Object[]}
+ */
 export function agruparCarrito(carrito) {
   const agrupado = {};
 
